@@ -1,0 +1,233 @@
+Successful / Failed Logons
+
+4624 — Successful logon
+
+4625 — Failed logon
+
+4648 — Logon with explicit credentials
+
+4634 — Logoff
+
+4647 — User initiated logoff
+
+4675 — SIDs assigned to token
+
+Kerberos
+
+4768 — Kerberos TGT requested
+
+4769 — Kerberos service ticket requested
+
+4770 — Kerberos ticket renewed
+
+4771 — Kerberos pre-authentication failed
+
+4776 — NTLM authentication
+
+🧑‍💻 2. Account Manipulation & Privilege Abuse
+User & Group Changes
+
+4720 — User account created
+
+4722 — User account enabled
+
+4723 — Password change attempt
+
+4724 — Password reset attempt
+
+4725 — User account disabled
+
+4726 — User account deleted
+
+4732 — User added to local security group
+
+4733 — User removed from local group
+
+4728 — User added to Domain group
+
+4729 — User removed from Domain group
+
+4756 — User added to Universal group
+
+4757 — User removed from Universal group
+
+4740 — Account locked out
+
+4781 — Username changed
+
+Privilege Use
+
+4670 — Permission on object changed
+
+4672 — Admin privileges assigned at logon (VERY important)
+
+🖥️ 3. Process Creation, Changes, Tampering
+Sysmon (if installed)
+
+Sysmon 1 — Process creation
+
+Sysmon 2 — File creation time changed
+
+Sysmon 3 — Network connection
+
+Sysmon 7 — Image loaded
+
+Sysmon 8 — CreateRemoteThread
+
+Sysmon 10 — ProcessAccess (LSASS dump indicator)
+
+Sysmon 11 — File create
+
+Sysmon 12–13 — Registry modifications
+
+Sysmon 15 — FileStream created
+
+Sysmon 22 — DNSSinkhole event
+
+Sysmon 23 — File deletions
+
+Native Windows
+
+4688 — Process created (default Windows audit)
+
+4689 — Process terminated
+
+4697 — Service installed
+
+7045 — New Windows service installed (System log)
+
+🌐 4. Network & Remote Access
+Remote Desktop
+
+4624 (Type 10) — RDP login
+
+4625 (Type 10) — Failed RDP login
+
+4778 — RDP session reconnected
+
+4779 — RDP session disconnected
+
+Remote Authentication
+
+4648 — Explicit credentials
+
+4769 — Kerberos service ticket request (lateral movement indicator)
+
+5140 — Network share accessed
+
+5142/5143/5144 — Share created/deleted/modified
+
+📁 5. Object Access (Files, Shares, Registry)
+File / Folder Auditing
+
+4663 — File or folder accessed
+
+4656 — Handle request (object access intent)
+
+4670 — Permissions on object changed
+
+Registry
+
+4657 — Registry value changed
+
+🔧 6. Service Control Manager (SCM) & System Changes
+
+7040 — Service start type changed
+
+7045 — New service installed
+
+7034 — Service crashed
+
+7036 — Service started/stopped
+
+4697 — New service installed (Security log)
+
+🛡️ 7. Firewall, Filtering Platform & Network Protection
+
+5152 — Packet blocked
+
+5155 — Application blocked
+
+5156 — Allowed outbound connection
+
+5158 — Connection allowed (listen)
+
+5157 — Blocked inbound/outbound connection
+
+🔑 8. Credential Access, DPAPI, LSASS Indicators
+
+4624/4672 — LOGON WITH HIGH PRIV (common for LSASS dumping)
+
+4688 + suspicious process — mimikatz.exe, procdump, etc
+
+4611 — Trusted logon process registered (rare; suspicious)
+
+4657 — DPAPI master key access
+
+🔄 9. Scheduled Tasks
+
+106 / 140 — Task registered/updated
+
+4698 — Scheduled task created
+
+4699 — Scheduled task deleted
+
+4702 — Scheduled task updated
+
+💿 10. PowerShell Logs (Critical for SOC)
+Event Log: Microsoft-Windows-PowerShell/Operational
+
+4104 — PowerShell script block logging
+
+4103 — PowerShell command invocation
+
+4100 — Engine lifetime
+
+600 — PowerShell provider started
+
+AMSI
+
+1116 — Malware detected
+
+1121 — Suspicious activity blocked by AMSI
+
+🧩 11. WMI Attacks
+WMI Logs
+
+5857 / 5858 — WMI filter/consumer binding
+
+5860 — WMI filter activity
+
+4688 + wmic.exe / PowerShell WMI call — remote execution indicators
+
+🧱 12. Windows Defender Logs
+
+1116 — Malware detected
+
+1117 — Malware remediation
+
+5007 — Defender configuration changed
+
+🔍 13. Boot / Driver / Persistence
+
+12 / 13 — System startup/shutdown
+
+6 — Driver loaded
+
+7045 — Service installation (VERY common persistence method)
+
+🛠️ 14. Group Policy & System Policy Changes
+
+4739 — Domain policy changed
+
+4719 — Audit policy changed
+
+4732 / 4733 — Group membership changes
+
+4735 / 4737 — Security group changed
+
+🧿 15. DNS Logs (Threat Hunting)
+
+DNS Server Log: 256–5001 — DNS query, error, response
+
+Sysmon 22 — DNS query (super useful for C2 detection)
